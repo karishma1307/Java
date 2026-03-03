@@ -1,0 +1,51 @@
+import java.io.FileWriter;
+import java.io.IOException;
+class Ticket {
+ int availableTickets = 10;
+ synchronized void bookTicket(int tickets) throws Exception {
+ int serviceCharge = 100 / tickets;
+ if (tickets <= 0) {
+throw new Exception("Invalid number of tickets");
+ }
+ if (tickets > availableTickets) {
+            throw new Exception("Not enough tickets available");
+        }
+        availableTickets -= tickets;
+        writeToFile("Booked " + tickets + " tickets");
+        System.out.println(tickets + " tickets booked successfully");
+    }
+    void writeToFile(String msg) throws IOException {
+        FileWriter fw = new FileWriter("booking.txt", true);
+        fw.write(msg + "\n");
+        fw.close();
+    }
+}
+class BookingThread extends Thread {
+    Ticket ticket;
+    int count;
+    BookingThread(Ticket ticket, int count) {
+        this.ticket = ticket;
+        this.count = count;
+    }
+    public void run() {
+        try {
+            ticket.bookTicket(count);
+        } catch (ArithmeticException e) {
+            System.out.println("Arithmetic Error: Division by zero");
+        } catch (Exception e) {
+            System.out.println("Booking Error: " + e.getMessage());
+        }
+    }
+}
+public class TicketBooking {
+    public static void main(String[] args) {
+        Ticket t = new Ticket();
+        BookingThread b1 = new BookingThread(t, 2);
+        BookingThread b2 = new BookingThread(t, 0); // arithmetic error
+        BookingThread b3 = new BookingThread(t, 8); // insufficient tickets
+        b1.start();
+        b2.start();
+        b3.start();
+        System.out.println("Ticket booking process finished");
+    }
+}
