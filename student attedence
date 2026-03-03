@@ -1,0 +1,14 @@
+import java.util.Scanner;
+public class Attendance {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        for (int i = 1; i <= n; i++) {
+            System.out.print("Enter attendance for student " + i + " (P/A): ");
+            char attendance = sc.next().charAt(0);
+        }
+        System.out.println("Attendance entered successfully.");
+        sc.close();
+    }
+}
