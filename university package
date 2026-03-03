@@ -1,0 +1,15 @@
+Student.java
+package university;
+public class Student {
+    public void display() {
+        System.out.println("Welcome to University Package");
+    }
+}
+Main.java
+import university.Student;
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.display();
+    }
+}
