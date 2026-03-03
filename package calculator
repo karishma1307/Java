@@ -1,0 +1,36 @@
+package calc;
+public class Calculator implements Runnable {
+    private int a, b;
+    public Calculator(int x, int y) {
+        a = x;
+        b = y;
+    }
+    public int divide() throws Exception {
+        if (b == 0) {
+            throw new ArithmeticException("Cannot divide by zero");
+        }
+        return a / b;
+    }
+    public double squareRoot() throws Exception {
+        if (a < 0) {
+            throw new Exception("Cannot find square root of negative number");
+        }
+        return Math.sqrt(a);
+    }
+    public void run() {
+        try {
+            System.out.println("Calculating for values: " + a + ", " + b);
+            int result = divide();
+            System.out.println("Division Result : " + result);
+            double sq = squareRoot();
+            System.out.println("Square Root of " + a + " : " + sq);
+        }
+        catch (ArithmeticException e) {
+            System.out.println("Arithmetic Error : " + e.getMessage());
+        }
+        catch (Exception e) {
+            System.out.println("General Error : " + e.getMessage());
+        }
+        System.out.println("Calculation completed");
+    }
+}
